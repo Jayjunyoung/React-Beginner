@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type ="text/babel">//이걸적어줘야 바벨 작동가능
+    //JSX 방법
+    //컴포넌트1
+    const root = document.getElementById("root");
+    const Title = () => ( <h3 id="title" onMouseEnter = {() =>console.log("정준영바보")}>
+        Hello I'm a title
+        </h3> ) 
+    /* 이 문법은 잘사용하지않는 문법 
+
+    const h3 = React.createElement("h3",
+    {
+        onMouseEnter: () => console.log("hi"),
+    },"Hello I'm a span"); //react로 element 생성하는 방법
+    */
+    const Button = () => ( <button style= {{//컴포넌트2
+        backgroundColor: "tomato",
+    }} onClick={() => console.log("클릭!")}>Click me</button> );
+
+    // = () => ()   : function과 return을 포함하고있다
+
+    /*
+    const btn = React.createElement("button", 
+    { //property자리에 클릭이벤트가능 or style: {backgroundColor: red}처럼 css도 가능
+        onClick: () => console.log("im clicked"),
+        style: {
+            backgroundColor: "tomato",
+        },
+    }, "Click me");
+    */
+    const Container = (
+        <div>
+            <Title />
+            <Button />            
+        </div>
+    )
+    ReactDOM.render(Container, root);   //render: 리액트로 root에 넣겠다
+    
+</script>
+</html>
