@@ -36,28 +36,81 @@
         },
     }, "Click me");
     */
-    function App()  {
+    function MinuitesTohours()  {
         const [minuites, setMinutes] = React.useState();
+        const [flipped, setFlipped] = React.useState(false);
         const onChange = (event) => {
             setMinutes(event.target.value);
         };
-        const onChange2 = (event) => {
-            setMinutes(event.target.value * 60);
+        const onChange2 = (event) => {//hour에서 적용되는 함수
+            setMinutes(event.target.value);
         }
         const Reset = () => {
             setMinutes(0)
         }
+        const onFlip = () => {
+            Reset();
+            setFlipped((current) => !current)
+        }
         return (
         <div> 
-            <h1>Super Converter</h1> 
             <div> 
-                <input value = {minuites} placeholder = "Minutes" type= "number" onChange={onChange}/>
+                <input value = {flipped ? minuites * 60 : minuites} placeholder = "Minutes" type= "number" disabled = {flipped === true} onChange={onChange}/>
             </div>
             <h4>You want to convert {minuites}</h4>
             <div>
-                <input value = {minuites / 60} placeholder = "Hours" type= "number" onChange={onChange2}/>
+                <input value = {flipped ? minuites : minuites / 60} placeholder = "Hours" type= "number" disabled = {flipped === false} onChange={onChange2}/>
             </div>
             <button onClick={Reset}>Reset</button>
+            <button onClick={onFlip}>{flipped ? "Turn back" : "flip"}</button>
+        </div>
+        );
+    };//이전까지 했던 분->시간 교환작업
+    //혼자서 km to mile로 바꿔보기
+    function KmToMiles() {
+        const [Kilometer, setKiloMeter] = React.useState(); //react-app 안쓸땐 React.useState 해줘야됌
+        const [flipped, setFlipped] = React.useState(true);
+        const kmChange = (event) => {
+            setKiloMeter(event.target.value);
+        }
+        const mileChange = (event) => {
+            setKiloMeter(event.target.value);
+        } 
+        const Reset = () => {
+            setKiloMeter(0);
+        }
+        const onFlip = () => {
+            Reset();
+            setFlipped((current) => !current);
+        }
+        return (  
+        <div>
+            <div>
+                <input value = {flipped ?  Kilometer : Kilometer / 0.62} placeholder = "KM" type= "number" disabled = {flipped === false} onChange={kmChange}/>
+            </div>
+            <h3>KM To Miles</h3>
+            <div>
+                <input value = {flipped ?  Kilometer * 0.62 : Kilometer} placeholder = "Miles" type= "number" disabled = {flipped === true} onChange={mileChange}/>
+            </div>
+            <button onClick={Reset}>Reset</button>
+            <button onClick={onFlip}>{flipped === false ? "back" : "flip"};</button>
+        </div>
+        );
+    };
+    function App()  { //변환기중 하나를 고를수있게 하나를 고르게해주는것
+        const [index, setIndex] = React.useState("0");//index에는 계속 업데이트 되는 값이 들어갈것
+        const onSelect = (event) => {
+            setIndex(event.target.value);//0이나 1이담김
+        }
+        return (//minuitestohours 컴포넌트를 가져옴
+        <div> 
+            <h1>Super Converter</h1> 
+            <select value = {index} onChange={onSelect}>
+                <option value = "0">Minuites & Hours</option>
+                <option value = "1">Km & Miles</option>
+            </select> 
+            {index === "0" ? <MinuitesTohours /> : null}
+            {index === "1" ? <KmToMiles /> : null}
         </div>
         );
     };
